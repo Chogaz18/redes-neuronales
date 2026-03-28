@@ -13,11 +13,9 @@ Aplicación en **Streamlit** para visualizar ECGs (estilo papel electrocardiogr�
 pip install -r requirements.txt
 ```
 
-## Dataset (recomendado)
+## Dataset
 
-Opción A (descarga completa):
-
-1. Descarga el ZIP desde PhysioNet:  
+1. Descarga el ZIP desde PhysioNet:
    https://physionet.org/content/ecg-arrhythmia/get-zip/1.0.0/
 2. Extrae el contenido de forma que quede `data/raw/WFDBRecords/`.
 
