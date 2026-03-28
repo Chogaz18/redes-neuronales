@@ -7,6 +7,7 @@ from typing import List, Optional
 import wfdb
 
 from src.data.metadata import RecordRef
+from src.data.wfdb_paths import wfdb_local_record_name
 
 
 _SNOMED_RE = re.compile(r"\b\d{9}\b")
@@ -16,7 +17,7 @@ def read_wfdb_header(record_ref: RecordRef):
     """
     Lee el header WFDB asociado al registro (`.hea` + `sig_name`, `fs`, etc.).
     """
-    return wfdb.rdheader(record_ref.record_id, pn_dir=str(record_ref.record_dir))
+    return wfdb.rdheader(wfdb_local_record_name(record_ref), pn_dir=None)
 
 
 def extract_snomed_ct_codes_from_hea(hea_path: Path) -> List[str]:

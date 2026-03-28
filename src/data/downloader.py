@@ -32,7 +32,6 @@ def _has_any_hea(heas_root: Path) -> bool:
 
 
 def get_default_download_plan(settings: Settings) -> DownloadPlan:
-    # PhysioNet ofrece un ZIP con el dataset completo.
     url = "https://physionet.org/content/ecg-arrhythmia/get-zip/1.0.0/"
     zip_path = raw_dir() / "ecg-arrhythmia-1.0.0.zip"
     extract_to = raw_dir()

@@ -35,3 +35,28 @@ def models_dir() -> Path:
 def sample_records_dir() -> Path:
     return artifacts_dir() / "sample_records"
 
+
+def physionet_dataset_root() -> Path:
+    """Raíz local del extracto PhysioNet (misma carpeta que `WFDBRecords/`)."""
+    return raw_dir()
+
+
+def condition_names_snomed_csv() -> Path:
+    """Mapeo acrónimo / nombre / SNOMED CT del dataset."""
+    return raw_dir() / "ConditionNames_SNOMED-CT.csv"
+
+
+def physionet_records_file() -> Path:
+    """Lista de rutas relativas de registros (archivo `RECORDS`)."""
+    return raw_dir() / "RECORDS"
+
+
+def dataset_license_txt() -> Path:
+    """Licencia del dataset en PhysioNet (`LICENSE.txt`)."""
+    return raw_dir() / "LICENSE.txt"
+
+
+def sha256sums_txt() -> Path:
+    """Checksums de integridad (`SHA256SUMS.txt`)."""
+    return raw_dir() / "SHA256SUMS.txt"
+

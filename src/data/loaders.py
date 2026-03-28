@@ -11,6 +11,7 @@ from src.config.settings import Settings
 from src.data.exceptions import ECGReadError, LeadNotFoundError
 from src.data.metadata import RecordRef
 from src.data.parsers import choose_rpeak_lead, header_to_metadata
+from src.data.wfdb_paths import wfdb_local_record_name
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -45,12 +46,10 @@ def load_ecg_record(
     Carga señales desde WFDB y retorna una estructura homogénea.
     """
     try:
-        header = wfdb.rdheader(record_ref.record_id, pn_dir=str(record_ref.record_dir))
+        rn = wfdb_local_record_name(record_ref)
+        header = wfdb.rdheader(rn, pn_dir=None)
         fs = float(header.fs)
-        full = wfdb.rdrecord(
-            record_ref.record_id,
-            pn_dir=str(record_ref.record_dir),
-        )
+        full = wfdb.rdrecord(rn, pn_dir=None)
         # full.p_signal shape: [n_samples, n_sig]
         p_signal = np.asarray(full.p_signal, dtype=float)
         signals = p_signal.T

@@ -15,9 +15,17 @@ pip install -r requirements.txt
 
 ## Dataset
 
+Coloca el material del ZIP en **`data/raw/`** (carpeta en la raíz del repo). **`src/`** es solo código; no hace falta copiar señales dentro de `src/data/`.
+
 1. Se descarga el ZIP desde PhysioNet:
    https://physionet.org/content/ecg-arrhythmia/get-zip/1.0.0/
-2. Se extrae el contenido de forma que quede `data/raw/WFDBRecords/`.
+2. Se extrae el contenido en `data/raw/` de forma que queden, como mínimo:
+   - `data/raw/WFDBRecords/` (señales WFDB)
+   - `data/raw/ConditionNames_SNOMED-CT.csv` (mapeo de diagnósticos SNOMED)
+   - `data/raw/RECORDS` (lista de rutas de registros)
+   - Opcional: `data/raw/LICENSE.txt`, `data/raw/SHA256SUMS.txt`
+
+Las rutas están centralizadas en `src/utils/paths.py` (`condition_names_snomed_csv`, etc.).
 
 ## Configuración
 
