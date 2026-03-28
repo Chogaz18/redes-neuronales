@@ -21,7 +21,6 @@ Opción A (descarga completa):
    https://physionet.org/content/ecg-arrhythmia/get-zip/1.0.0/
 2. Extrae el contenido de forma que quede `data/raw/WFDBRecords/`.
 
-
 ## Configuración
 
 Opcional: crea un archivo `.env` en la raíz del proyecto.
@@ -40,9 +39,4 @@ streamlit run app.py
 ## Estructura del proyecto
 
 `src/` contiene módulos separados por responsabilidad: config, data ingestion, procesamiento (HR) y visualización.
-
-## Despliegue (Streamlit Cloud)
-
-- Asegura que el dataset (o un subconjunto) esté disponible en el mismo path que usa `WFDB_RECORDS_DIR`.
-- Si el dataset es pesado, usa `SAMPLE_RECORD_COUNT` para limitar la exploración en la demo.
 
