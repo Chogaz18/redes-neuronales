@@ -15,9 +15,9 @@ pip install -r requirements.txt
 
 ## Dataset
 
-1. Descarga el ZIP desde PhysioNet:
+1. Se descarga el ZIP desde PhysioNet:
    https://physionet.org/content/ecg-arrhythmia/get-zip/1.0.0/
-2. Extrae el contenido de forma que quede `data/raw/WFDBRecords/`.
+2. Se extrae el contenido de forma que quede `data/raw/WFDBRecords/`.
 
 ## Configuración
 
