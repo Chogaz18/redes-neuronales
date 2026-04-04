@@ -105,6 +105,14 @@ try:
         min_bpm=settings.hr_min_bpm,
         max_bpm=settings.hr_max_bpm,
     )
+
+# Para guardar las respuestas de la data para que el chart no se rompa, aunque el cálculo de bpm falle (p. ej. por pocos picos R detectados)
+    st.session_state.hr = hr.bpm_mean
+    st.session_state.rr_mean = hr.rr_mean_s
+    st.session_state.n_rpeaks = hr.n_rpeaks
+    st.session_state.record_id = selected_record_id
+
+
 except ValueError as e:
     st.error(str(e))
     st.stop()
