@@ -27,4 +27,3 @@ st.markdown(
 Coloca el dataset en la ruta configurada (ver `README.md`). La app funcionará mejor si el directorio contiene el formato WFDB con la carpeta `WFDBRecords/` bajo `data/raw/`.
 """
 )
-
