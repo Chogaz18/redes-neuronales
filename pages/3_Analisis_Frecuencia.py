@@ -13,7 +13,14 @@ from src.data.metadata import RecordRef, discover_record_refs
 from src.data.parsers import choose_rpeak_lead, header_to_metadata
 from src.processing.heart_rate import estimate_heart_rate, heart_rate_alert_class
 from src.visualization.plots import make_hr_ecg_figure
+from src.visualization.ui import (
+    inject_global_styles,
+    record_select_sync,
+    sidebar_brand,
+)
 
+inject_global_styles()
+sidebar_brand()
 
 st.title("Análisis de frecuencia cardiaca")
 
@@ -42,7 +49,7 @@ def _load_hr_segment(
     duration_s: float,
     rpeak_lead_pref: str,
 ):
-    _ = wfdb_records_dir  # clave de caché: cambia si se reubica el dataset
+    _ = wfdb_records_dir
     cfg: Settings = get_settings()
     ref = RecordRef(record_id=record_id, hea_path=Path(hea_path_str))
     meta = header_to_metadata(ref)
@@ -59,7 +66,12 @@ if not record_ids:
 
 ref_by_id = {r.record_id: r for r in refs}
 
-selected_record_id = st.sidebar.selectbox("Registro", record_ids, index=0)
+selected_record_id = record_select_sync(
+    record_ids,
+    label="Registro",
+    sidebar=True,
+    widget_key="ecg_record_hr_page",
+)
 start_s = st.sidebar.slider(
     "Inicio (s)",
     min_value=0.0,
@@ -161,5 +173,5 @@ else:
 st.plotly_chart(fig, use_container_width=True)
 
 st.caption(
-    "Uso académico: las alertas se basan en el rango 60–100 bpm configurado; no sustituyen diagnóstico médico."
+    "Las alertas usan el rango configurado en `.env` (por defecto 60–100 lpm); no sustituyen diagnóstico médico."
 )

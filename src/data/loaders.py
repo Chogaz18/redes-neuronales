@@ -10,7 +10,8 @@ import wfdb
 from src.config.settings import Settings
 from src.data.exceptions import ECGReadError, LeadNotFoundError
 from src.data.metadata import RecordRef
-from src.data.parsers import choose_rpeak_lead, header_to_metadata
+from src.data.parsers import choose_rpeak_lead, extract_snomed_ct_codes_from_hea
+from src.data.wfdb_hea_fix import wfdb_hea_safe_read
 from src.data.wfdb_paths import wfdb_local_record_name
 from src.utils.logger import get_logger
 
@@ -47,17 +48,16 @@ def load_ecg_record(
     """
     try:
         rn = wfdb_local_record_name(record_ref)
-        header = wfdb.rdheader(rn, pn_dir=None)
-        fs = float(header.fs)
-        full = wfdb.rdrecord(rn, pn_dir=None)
+        with wfdb_hea_safe_read(record_ref):
+            header = wfdb.rdheader(rn, pn_dir=None)
+            fs = float(header.fs)
+            full = wfdb.rdrecord(rn, pn_dir=None)
         # full.p_signal shape: [n_samples, n_sig]
         p_signal = np.asarray(full.p_signal, dtype=float)
         signals = p_signal.T
         lead_names = list(full.sig_name) if getattr(full, "sig_name", None) is not None else list(header.sig_name)
-        snomed_codes = []
         try:
-            # Heurística: SNOMED desde `.hea`
-            snomed_codes = header_to_metadata(record_ref).get("snomed_ct_codes", [])
+            snomed_codes = extract_snomed_ct_codes_from_hea(record_ref.hea_path)
         except Exception:
             snomed_codes = []
 
