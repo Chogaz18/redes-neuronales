@@ -36,17 +36,8 @@ El entrenamiento del MLP se hace en **Google Colab**:
 
    **`artifacts/models/ecg_mlp_pipeline.joblib`**
 
-4. La app lo detecta por defecto (`src/config/settings.py` prioriza ese nombre). Si usas otra ruta o nombre, define `CLASSIFIER_MODEL_PATH` en `.env`.
+4. La app lo detecta por defecto (`src/config/settings.py` prioriza ese nombre).
 
-### Notebook local (opcional)
-
-Si prefieres entrenar en tu máquina, puedes usar `notebooks/train_ecg_classifier.ipynb` desde la **raíz del proyecto** (no desde `src/`). Para regenerar ese `.ipynb` desde el script del repo:
-
-```bash
-python scripts/create_training_notebook.py
-```
-
-**Si ves `Registros .hea encontrados: 0`:** las rutas relativas del `.env` se resuelven respecto a la **raíz del repo**. Comprueba que exista `data/raw/WFDBRecords/.../*.hea`.
 
 ## Configuración (`.env` opcional)
 
