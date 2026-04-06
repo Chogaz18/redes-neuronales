@@ -15,7 +15,7 @@ Aplicación para el curso de **redes neuronales / series temporales**: visualiza
 pip install -r requirements.txt
 ```
 
-Incluye dependencias para ejecutar el **notebook** de entrenamiento (`jupyter`, `ipykernel`).
+Incluye dependencias para **Jupyter** si quieres usar el notebook local de referencia (`jupyter`, `ipykernel`).
 
 ## Dataset
 
@@ -24,28 +24,29 @@ Coloca el material del ZIP en **`data/raw/`** (raíz del repo). **`src/`** es so
 1. Descarga: https://physionet.org/content/ecg-arrhythmia/get-zip/1.0.0/
 2. Extrae de modo que exista `data/raw/WFDBRecords/` y, si puedes, `data/raw/ConditionNames_SNOMED-CT.csv`.
 
-## Entrenar el clasificador (notebook)
+## Entrenar el clasificador (Google Colab)
 
-1. Abre Jupyter desde la **raíz del proyecto** (donde están `src/` y `notebooks/`).  
-   Si la terminal está en `src/`, ejecuta antes `cd ..`. Si lanzas `jupyter notebook notebooks/...` **desde `src/`**, buscará `src/notebooks/...` y dará *No such file or directory*.
+El entrenamiento del MLP se hace en **Google Colab**:
 
-   ```bash
-   jupyter notebook notebooks/train_ecg_classifier.ipynb
-   ```
+**[Notebook Colab — entrenamiento ECG / MLP](https://colab.research.google.com/drive/1FqXI-l_JdPgBclxsA88uJzln3_7oirYB)**
 
-2. La primera celda fija `ROOT`, hace `os.chdir(ROOT)` y añade el repo a `sys.path` (coherente con Streamlit).
+1. Abre el enlace, sube o monta los datos que use el notebook (según las celdas del Colab).
+2. Ejecuta las celdas hasta generar el pipeline entrenado.
+3. Descarga el artefacto y colócalo en el repositorio como:
 
-3. Ejecuta todas las celdas. Se genera `artifacts/models/ecg_mlp_4class.joblib` (MLP baseline; límites editables en el notebook).
+   **`artifacts/models/ecg_mlp_pipeline.joblib`**
 
-4. La app carga ese archivo vía `CLASSIFIER_MODEL_PATH` en `.env` (opcional).
+4. La app lo detecta por defecto (`src/config/settings.py` prioriza ese nombre). Si usas otra ruta o nombre, define `CLASSIFIER_MODEL_PATH` en `.env`.
 
-**Si ves `Registros .hea encontrados: 0`:** las rutas relativas del `.env` (p. ej. `data/raw/WFDBRecords`) se resuelven ahora respecto a la **raíz del repo**, no al directorio desde el que abriste Jupyter. Comprueba que exista esa carpeta y que dentro haya `WFDBRecords/.../*.hea`.
+### Notebook local (opcional)
 
-Para **regenerar** el `.ipynb` desde el script del repo:
+Si prefieres entrenar en tu máquina, puedes usar `notebooks/train_ecg_classifier.ipynb` desde la **raíz del proyecto** (no desde `src/`). Para regenerar ese `.ipynb` desde el script del repo:
 
 ```bash
 python scripts/create_training_notebook.py
 ```
+
+**Si ves `Registros .hea encontrados: 0`:** las rutas relativas del `.env` se resuelven respecto a la **raíz del repo**. Comprueba que exista `data/raw/WFDBRecords/.../*.hea`.
 
 ## Configuración (`.env` opcional)
 
@@ -53,7 +54,7 @@ python scripts/create_training_notebook.py
 |----------|-------------|
 | `WFDB_RECORDS_DIR` | Ruta a `WFDBRecords` (por defecto `data/raw/WFDBRecords`) |
 | `SAMPLE_RECORD_COUNT` | Cuántos registros listar en la UI |
-| `CLASSIFIER_MODEL_PATH` | Ruta al `.joblib` del MLP (por defecto `artifacts/models/ecg_mlp_4class.joblib`) |
+| `CLASSIFIER_MODEL_PATH` | Ruta al `.joblib` del MLP (por defecto `artifacts/models/ecg_mlp_pipeline.joblib`, si no existe se prueba `ecg_mlp_4class.joblib`) |
 
 ## Ejecutar la aplicación
 
@@ -63,12 +64,12 @@ streamlit run app.py
 
 Tema visual por defecto en `.streamlit/config.toml`.
 
-## Integración futura (chatbot)
+## Asistente y modelo
 
-El mismo artefacto `ecg_mlp_4class.joblib` puede cargarse desde otro servicio o un agente: la interfaz común es `src/modeling/infer.py` (`load_model_and_infer`).
+El artefacto **`ecg_mlp_pipeline.joblib`** se usa en la página de clasificación y en el chat del asistente vía `src/modeling/infer.py` (`load_model_and_infer`).
 
 ## Estructura relevante
 
 - `src/` — configuración, datos WFDB, procesamiento (HR), visualización, modelo.
-- `pages/` — pantallas Streamlit (dataset, ECG, frecuencia, clasificación).
-- `notebooks/train_ecg_classifier.ipynb` — entrenamiento offline del MLP.
+- `pages/` — pantallas Streamlit (exploración ECG, frecuencia, clasificación, asistente).
+- `artifacts/models/ecg_mlp_pipeline.joblib` — pipeline MLP generado desde Colab (o entrenamiento local equivalente).
