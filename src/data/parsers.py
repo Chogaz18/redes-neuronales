@@ -4,10 +4,8 @@ import re
 from pathlib import Path
 from typing import List, Optional
 
-import wfdb
-
 from src.data.metadata import RecordRef
-from src.data.wfdb_paths import wfdb_local_record_name
+from src.data.wfdb_hea_fix import _sanitize_hea_text, rdheader_from_string
 
 
 _SNOMED_RE = re.compile(r"\b\d{9}\b")
@@ -16,8 +14,14 @@ _SNOMED_RE = re.compile(r"\b\d{9}\b")
 def read_wfdb_header(record_ref: RecordRef):
     """
     Lee el header WFDB asociado al registro (`.hea` + `sig_name`, `fs`, etc.).
+    Aplica saneamiento temporal si la fecha/hora de la línea 0 es inválida (dataset Chapman).
+
+    El parse se hace en memoria (`rdheader_from_string`) para no depender de escribir
+    el `.hea` ni de que wfdb/fsspec abran exactamente la misma ruta que Path.
     """
-    return wfdb.rdheader(wfdb_local_record_name(record_ref), pn_dir=None)
+    raw = record_ref.hea_path.read_text(encoding="ascii", errors="ignore")
+    fixed = _sanitize_hea_text(raw)
+    return rdheader_from_string(fixed)
 
 
 def extract_snomed_ct_codes_from_hea(hea_path: Path) -> List[str]:
