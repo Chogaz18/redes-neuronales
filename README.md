@@ -72,3 +72,6 @@ El artefacto **`ecg_mlp_pipeline.joblib`** se usa en la página de clasificació
 - `src/` — configuración, datos WFDB, procesamiento (HR), visualización, modelo.
 - `pages/` — pantallas Streamlit (exploración ECG, frecuencia, clasificación, asistente).
 - `artifacts/models/ecg_mlp_pipeline.joblib` — pipeline MLP generado desde Colab (o entrenamiento local equivalente).
+
+## Enlace de Streamlit
+https://redes-neuronales-ajm8qqv3aldkggfmagl3qs.streamlit.app/
