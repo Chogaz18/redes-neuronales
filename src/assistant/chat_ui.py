@@ -195,7 +195,3 @@ def render_chat_core(
             st.session_state[CHAT_LAST_TOPIC_KEY] = topic
         st.session_state[CHAT_MESSAGES_KEY].append({"role": "assistant", "content": reply})
         st.rerun()
-
-    st.caption(
-        "Respuestas generadas con **reglas** y datos del registro y del `.joblib` (sin modelo de lenguaje externo)."
-    )

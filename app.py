@@ -37,6 +37,5 @@ st.markdown(
 | **Clasificación** | Inferencia con el `.joblib` del MLP (`CLASSIFIER_MODEL_PATH`) |
 | **Asistente (chat)** | Preguntas en español sobre el registro y el modelo (sin LLM externo) |
 
-Coloca los datos en `data/raw/` (ver `README.md`). Entrena el modelo con `notebooks/train_ecg_classifier.ipynb`.
 """
 )

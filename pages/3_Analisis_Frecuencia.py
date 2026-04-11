@@ -172,6 +172,3 @@ else:
 
 st.plotly_chart(fig, use_container_width=True)
 
-st.caption(
-    "Las alertas usan el rango configurado en `.env` (por defecto 60–100 lpm); no sustituyen diagnóstico médico."
-)
