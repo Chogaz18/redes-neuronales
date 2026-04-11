@@ -1,3 +1,11 @@
+## Integrantes
+
+- HUANACO MEDINA, JHON  
+- RAMÍREZ UCAÑAY, BARBARITA PAULA JANETH  
+- UGAZ PERALES, CARLOS ANDRÉ  
+- VILLA LONGA, JOSE AARON  
+
+
 # ECG Arrhythmia Lab (Streamlit + PhysioNet)
 
 Aplicación para el curso de **redes neuronales / series temporales**: visualización **tipo papel ECG** (25 mm/s, 10 mm = 1 mV), **frecuencia cardiaca** con **NeuroKit2** (picos R, bpm, alertas 60–100 lpm) y **clasificación opcional** (MLP en 4 clases alineadas a SNOMED CT).
